@@ -1,0 +1,14 @@
+body {
+    font-family: 'Comic Neue', cursive, sans-serif;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+    min-height: 100vh;
+}
+
+.card {
+    border-radius: 20px !important;
+    border: none;
+}
+
+canvas {
+    touch-action: none; /* Prevents mobile scrolling while drawing */
+}

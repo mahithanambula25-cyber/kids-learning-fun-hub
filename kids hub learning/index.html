@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Learning Fun Hub</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-light">
+
+    <div class="container py-4 text-center">
+        <h1 class="fw-bold mb-4 text-primary">🎨 Kids Learning Fun Hub 📚</h1>
+
+        <!-- Navigation Tabs / Subject Buttons -->
+        <div class="btn-group mb-4 shadow-sm flex-wrap" role="group">
+            <button onclick="switchTab('english')" id="tab-english" class="btn btn-outline-primary px-4 py-2 m-1 fw-bold">🔤 English</button>
+            <button onclick="switchTab('maths')" id="tab-maths" class="btn btn-outline-success px-4 py-2 m-1 fw-bold">🔢 Maths</button>
+            <button onclick="switchTab('telugu')" id="tab-telugu" class="btn btn-outline-warning px-4 py-2 m-1 fw-bold">🇮🇳 Telugu</button>
+            <button onclick="switchTab('drawing')" id="tab-drawing" class="btn btn-outline-danger px-4 py-2 m-1 fw-bold active">✏️ Drawing Pad</button>
+        </div>
+
+        <!-- ================= ENGLISH SECTION (A TO Z) ================= -->
+        <div id="section-english" class="content-section card shadow-lg p-4 mx-auto d-none" style="max-width: 650px;">
+            <h3 class="text-primary mb-3">🔤 English A to Z Phonics</h3>
+            <p class="text-muted">Click any letter from A to Z to hear and learn!</p>
+            <div class="d-flex flex-wrap justify-content-center gap-1" id="alphabetGrid" style="max-height: 250px; overflow-y: auto;">
+                <!-- Populated via JavaScript -->
+            </div>
+            <div id="letterDisplay" class="mt-3 display-1 fw-bold text-danger">A</div>
+            <p id="letterWord" class="fs-4 text-muted">Apple 🍎</p>
+        </div>
+
+        <!-- ================= MATHS SECTION ================= -->
+        <div id="section-maths" class="content-section card shadow-lg p-4 mx-auto d-none" style="max-width: 650px;">
+            <h3 class="text-success mb-3">🔢 Fun Maths & Counting</h3>
+            <p class="text-muted">Solve the simple addition puzzle!</p>
+            <div class="fs-2 fw-bold text-dark my-3" id="mathProblem">2 + 3 = ?</div>
+            <div class="d-flex justify-content-center gap-2 mb-3" id="mathOptions">
+                <!-- Populated via JavaScript -->
+            </div>
+            <h4 id="mathFeedback" class="fw-bold text-success"></h4>
+            <button onclick="generateMathQuiz()" class="btn btn-success mt-2">New Question 🔄</button>
+        </div>
+
+        <!-- ================= TELUGU SECTION (FULL VARNAMALA) ================= -->
+        <div id="section-telugu" class="content-section card shadow-lg p-4 mx-auto d-none" style="max-width: 650px;">
+            <h3 class="text-warning mb-3">🇮🇳 Telugu Varnamala (తెలుగు వర్ణమాల)</h3>
+            <p class="text-muted">Click any letter to learn the traditional pronunciation!</p>
+            
+            <div class="mb-3">
+                <h5 class="text-danger fw-bold">అచ్చులు (Achchulu)</h5>
+                <div class="d-flex flex-wrap justify-content-center gap-1" id="achchuluGrid"></div>
+            </div>
+
+            <div class="mb-3">
+                <h5 class="text-success fw-bold">హల్లులు (Hallulu)</h5>
+                <div class="d-flex flex-wrap justify-content-center gap-1" id="halluluGrid" style="max-height: 200px; overflow-y: auto;"></div>
+            </div>
+
+            <div id="teluguDisplay" class="mt-3 display-1 fw-bold text-primary">అ</div>
+            <p id="teluguWord" class="fs-4 text-muted">Amma (అమ్మ)</p>
+        </div>
+
+        <!-- ================= DRAWING PAD SECTION ================= -->
+        <div id="section-drawing" class="content-section card shadow-lg p-4 mx-auto" style="max-width: 650px;">
+            <h3 class="text-secondary mb-3">✏️ Ultimate Kids Drawing Studio</h3>
+            <p class="text-muted small">Supports touch for mobiles/tablets and mouse for laptops!</p>
+
+            <!-- Tools & Brushes -->
+            <div class="mb-3 d-flex flex-wrap justify-content-center gap-2 align-items-center">
+                <span class="fw-bold">Brush Style:</span>
+                <button onclick="setBrush('brush')" id="btn-brush" class="btn btn-sm btn-primary">🖌️ Standard</button>
+                <button onclick="setBrush('calligraphy')" id="btn-calligraphy" class="btn btn-sm btn-outline-secondary">✒️ Calligraphy</button>
+                <button onclick="setBrush('oil')" id="btn-oil" class="btn btn-sm btn-outline-secondary">🎨 Oil Brush</button>
+                <button onclick="setBrush('watercolor')" id="btn-watercolor" class="btn btn-sm btn-outline-secondary">💧 Water Paint</button>
+                <button onclick="setBrush('pencil')" id="btn-pencil" class="btn btn-sm btn-outline-secondary">✏️ Pencil</button>
+                <button onclick="setBrush('crayon')" id="btn-crayon" class="btn btn-sm btn-outline-secondary">🖍️ Crayon</button>
+                <button onclick="setBrush('eraser')" id="btn-eraser" class="btn btn-sm btn-danger">🧽 Eraser</button>
+            </div>
+
+            <!-- Colors & Sizes -->
+            <div class="mb-3 d-flex flex-wrap justify-content-center gap-3 align-items-center">
+                <div>
+                    <label class="fw-bold me-1">Color:</label>
+                    <input type="color" id="colorPicker" value="#ff0000" onchange="setColor(this.value)" class="form-control form-control-color d-inline-block align-middle">
+                </div>
+                <div>
+                    <label class="fw-bold me-1">Size:</label>
+                    <select id="sizePicker" onchange="setSize(this.value)" class="form-select form-select-sm d-inline-block w-auto">
+                        <option value="3">Small</option>
+                        <option value="8" selected>Medium</option>
+                        <option value="15">Large</option>
+                        <option value="25">Extra Large</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Shapes Toolbar -->
+            <div class="mb-3">
+                <span class="fw-bold d-block mb-1">Shapes:</span>
+                <div class="btn-group flex-wrap justify-content-center gap-1">
+                    <button onclick="setShape('free')" id="shape-free" class="btn btn-sm btn-dark">✍️ Free Draw</button>
+                    <button onclick="setShape('rectangle')" id="shape-rectangle" class="btn btn-sm btn-outline-secondary">⬛ Rectangle</button>
+                    <button onclick="setShape('oval')" id="shape-oval" class="btn btn-sm btn-outline-secondary">⭕ Oval / Circle</button>
+                    <button onclick="setShape('triangle')" id="shape-triangle" class="btn btn-sm btn-outline-secondary">🔺 Triangle</button>
+                    <button onclick="setShape('star')" id="shape-star" class="btn btn-sm btn-outline-secondary">⭐ Star</button>
+                    <button onclick="setShape('line')" id="shape-line" class="btn btn-sm btn-outline-secondary">➖ Line</button>
+                    <button onclick="setShape('arrow')" id="shape-arrow" class="btn btn-sm btn-outline-secondary">➡️ Arrow</button>
+                </div>
+            </div>
+
+            <!-- Canvas Container -->
+            <div class="position-relative border border-3 border-dark rounded bg-white shadow-sm mx-auto overflow-hidden" style="width: 100%; max-width: 550px; height: 350px;">
+                <canvas id="drawCanvas" class="w-100 h-100 cursor-crosshair"></canvas>
+            </div>
+            
+            <div class="mt-3 d-flex justify-content-center gap-2">
+                <button onclick="clearCanvas()" class="btn btn-danger px-4 fw-bold">🗑️ Clear Canvas</button>
+                <button onclick="saveDrawing()" class="btn btn-success px-4 fw-bold">💾 Save Drawing</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
